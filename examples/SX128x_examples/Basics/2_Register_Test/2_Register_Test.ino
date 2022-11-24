@@ -73,7 +73,7 @@ const uint8_t PACKET_TYPE_LORA = 0x01;
 #define NSS 10                                  //SX128X device select
 #define NRESET 9                                //SX128X reset pin
 #define RFBUSY 7                                //SX128X busy pin 
-#define LED1 8                                  //for on board LED, put high for on
+#define LED1 13                                 //for on board LED, put high for on
   
 //**************************************************************/
 
@@ -85,6 +85,9 @@ uint8_t saveddevice;
 
 void setup()
 {
+
+  pinMode(LED1, OUTPUT);                       //setup pin as output for indicator LED
+  
   Serial.begin(9600);
   Serial.println(F("2_Register_Test Starting"));
 
@@ -107,6 +110,7 @@ void setup()
 
 void loop()
 {
+  digitalWrite(LED1, HIGH);
   uint32_t frequency;
   resetDevice();                             //reset the device
   Serial.println(F("Registers at reset"));   //show the all registers following a reset
@@ -132,7 +136,8 @@ void loop()
   printRegisters(0x0900, 0x090F);            //show the registers after frequency change
   Serial.println();
   Serial.println();
-  delay(5000);
+  digitalWrite(LED1, LOW);
+  delay(1000);
 }
 
 
